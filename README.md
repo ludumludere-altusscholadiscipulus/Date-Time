@@ -1,4 +1,4 @@
-# Date-Time
+# Date&Time
 
 Hello! If you're reading this, then thank you for downloading the source code of Date&Time. It's all basic math and counting stuff. I didn't work on a pure game since
 college kept me busy and I was already working on two games for a research paper. Although those games are concept of proof, it was the toughest and most exhausting game
