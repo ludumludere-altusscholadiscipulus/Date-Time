@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://12HourTimeFormat2.png" type="Texture" id=1]
+[ext_resource path="res://12HourTimeFormat1.png" type="Texture" id=2]
+[ext_resource path="res://CompassGold.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 1 ) ],
+"loop": false,
+"name": "default",
+"speed": 0.0
+} ]
+
+[sub_resource type="DynamicFont" id=2]
+size = 128
+font_data = ExtResource( 3 )
+
+[node name="Digital12Hour" type="Node2D"]
+
+[node name="Base" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+
+[node name="Hour" type="Label" parent="."]
+margin_left = -197.0
+margin_top = -61.0
+margin_right = -52.0
+margin_bottom = 61.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "1"
+align = 2
+valign = 1
+
+[node name="Minute" type="Label" parent="."]
+margin_left = 12.0
+margin_top = -61.0
+margin_right = 151.0
+margin_bottom = 61.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "10"
+valign = 1

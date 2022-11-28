@@ -1,0 +1,94 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Main.gd" type="Script" id=1]
+[ext_resource path="res://AnalogClock.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Digital12Hour.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Digital24Hour.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Calendar.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Weekday.tscn" type="PackedScene" id=6]
+[ext_resource path="res://CompassGold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://DayNo.tscn" type="PackedScene" id=8]
+[ext_resource path="res://DateAndTimeSong.wav" type="AudioStream" id=9]
+
+[sub_resource type="Animation" id=1]
+resource_name = "DayNightCycle"
+length = 24.0
+loop = true
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 5, 6, 6.5, 7, 7.5, 8, 12, 17, 18, 18.5, 19, 19.5, 20.5, 21.5, 24 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.0823529, 0.054902, 0.360784, 1 ), Color( 0.0823529, 0.054902, 0.360784, 1 ), Color( 0.203922, 0.0745098, 0.345098, 1 ), Color( 0.368627, 0.113725, 0.32549, 1 ), Color( 0.611765, 0.164706, 0.294118, 1 ), Color( 0.839216, 0.223529, 0.25098, 1 ), Color( 0.956863, 0.388235, 0.235294, 1 ), Color( 0.235294, 0.939951, 0.956863, 1 ), Color( 0.337255, 0.533333, 0.905882, 1 ), Color( 0.337255, 0.533333, 0.905882, 1 ), Color( 0.956863, 0.388235, 0.235294, 1 ), Color( 0.839216, 0.223529, 0.25098, 1 ), Color( 0.611765, 0.164706, 0.294118, 1 ), Color( 0.368627, 0.113725, 0.32549, 1 ), Color( 0.203922, 0.0745098, 0.345098, 1 ), Color( 0.0823529, 0.054902, 0.360784, 1 ), Color( 0.0823529, 0.054902, 0.360784, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=2]
+size = 128
+font_data = ExtResource( 7 )
+
+[node name="Main" type="Node2D"]
+rotation = 0.000433487
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ 600.0, 300.0 ],
+"_edit_vertical_guides_": [ 1024.0, 512.0 ]
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -23.0
+margin_top = -19.0
+margin_right = 1028.0
+margin_bottom = 607.0
+color = Color( 0.0823529, 0.054902, 0.360784, 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/DayNightCycle = SubResource( 1 )
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2( 512, 300 )
+stream = ExtResource( 9 )
+volume_db = -5.0
+
+[node name="Time" type="Node2D" parent="."]
+visible = false
+
+[node name="AnalogClock" parent="Time" instance=ExtResource( 2 )]
+position = Vector2( 292.137, 315.972 )
+
+[node name="Digital12Hour" parent="Time" instance=ExtResource( 3 )]
+position = Vector2( 730.169, 390.684 )
+
+[node name="Digital24Hour" parent="Time" instance=ExtResource( 4 )]
+position = Vector2( 730.169, 240.684 )
+
+[node name="Date" type="Node2D" parent="."]
+
+[node name="Weekday" parent="Date" instance=ExtResource( 6 )]
+position = Vector2( 512.085, 196.778 )
+
+[node name="Calendar" parent="Date" instance=ExtResource( 5 )]
+position = Vector2( 454.147, 338.803 )
+
+[node name="DayNo" parent="Date" instance=ExtResource( 8 )]
+position = Vector2( 512.21, 483.778 )
+
+[node name="Title" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 120.0
+custom_fonts/font = SubResource( 2 )
+text = "Time"
+align = 1
+valign = 1
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="finished" from="Music" to="." method="_on_Music_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
